@@ -1,10 +1,57 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<title></title>
-</head>
-<body>
-<h1> index 파일입니다.</h1>
-</body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>아티스트 랭킹</title>
+
+    <script>
+      $(document).ready(function () {
+        fetch("/ranking")
+          .then((res) => res.json())
+          .then((data) => {
+            data.forEach((artist) => {
+              let name = artist["name"];
+              let rank = artist["rank"];
+              let fan = artist["fan"];
+              let image_url = artist["image_url"];
+              let average_point = artist["average_point"];
+
+              $("#artists-ranking").append(`<tr>
+                    <td><img src=${image_url}></td>
+                    <td class="rank">${rank}</td>
+                    <td>${name}</td>
+                    <td>${fan}</td>
+                    <td>${average_point}</td>
+                    </tr>`);
+            });
+          });
+      });
+    </script>
+    <link rel="stylesheet" href="../static/css/index.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>아티스트 랭킹 Top 50</h1>
+      </header>
+      <div class="wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>사진</th>
+              <th>순위</th>
+              <th>이름</th>
+              <th>팬 수</th>
+              <th>평점</th>
+            </tr>
+          </thead>
+          <tbody id="artists-ranking">
+            <tr></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
 </html>
