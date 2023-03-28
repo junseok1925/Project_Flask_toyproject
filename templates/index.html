@@ -1,76 +1,73 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="../static/css/index.css" />
+    <title>아티스트 랭킹</title>
 
-<head>
-    <meta charset="UTF-8">
-    <title>로그인 페이지 입니다.</title>
+    <script>
+      $(document).ready(function () {
+        fetch("/ranking")
+          .then((res) => res.json())
+          .then((data) => {
+            data.forEach((artist) => {
+              let name = artist["name"];
+              let rank = artist["rank"];
+              let fan = artist["fan"];
+              let image_url = artist["image_url"];
+              let average_point = artist["average_point"];
 
-	<script src="../static/js/index.js"> </script>
-    <link rel="stylesheet" href="../static/css/index.css">
-
-
-</head>
-
-<body>
-
-    <p class="tip">Click on button in image container</p>
-    <div class="cont">
-        <div class="form sign-in">
-            <h2>Welcome back,</h2>
-            <label>
-                <span>Email</span>
-                <input type="email" />
-            </label>
-            <label>
-                <span>Password</span>
-                <input type="password" />
-            </label>
-            <p class="forgot-pass">Forgot password?</p>
-            <button type="button" class="submit">Sign In</button>
-            <button type="button" class="fb-btn">Connect with <span>facebook</span></button>
-        </div>
-        <div class="sub-cont">
-            <div class="img">
-                <div class="img__text m--up">
-                    <h2>New here?</h2>
-                    <p>Sign up and discover great amount of new opportunities!</p>
-                </div>
-                <div class="img__text m--in">
-                    <h2>One of us?</h2>
-                    <p>If you already has an account, just sign in. We've missed you!</p>
-                </div>
-                <div class="img__btn">
-                    <span class="m--up">Sign Up</span>
-                    <span class="m--in">Sign In</span>
-                </div>
-            </div>
-            <div class="form sign-up">
-                <h2>Time to feel like home,</h2>
-                <label>
-                    <span>Name</span>
-                    <input type="text" />
-                </label>
-                <label>
-                    <span>Email</span>
-                    <input type="email" />
-                </label>
-                <label>
-                    <span>Password</span>
-                    <input type="password" />
-                </label>
-                <button type="button" class="submit">Sign Up</button>
-                <button type="button" class="fb-btn">Join with <span>facebook</span></button>
-            </div>
-        </div>
+              $("#artists-ranking").append(`<tr>
+                    <td><img src=${image_url}></td>
+                    <th scope="row">${rank}</th>
+                    <td>${name}</td>
+                    <td>${fan}</td>
+                    <td>${average_point}</td>
+                    </tr>`);
+            });
+          });
+      });
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid d-flex justify-content-end">
+        <a class="navbar-brand" href="#">로그인/회원가입</a>
+      </div>
+    </nav>
+    <div class="container">
+      <header>
+        <h1>아티스트 랭킹 Top 50</h1>
+      </header>
+      <div class="wrapper">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">사진</th>
+              <th scope="col">순위</th>
+              <th scope="col">이름</th>
+              <th scope="col">팬 수</th>
+              <th scope="col">평점</th>
+            </tr>
+          </thead>
+          <tbody id="artists-ranking">
+            <tr></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-
-    <a href="https://dribbble.com/shots/3306190-Login-Registration-form" target="_blank" class="icon-link">
-        <img src="http://icons.iconarchive.com/icons/uiconstock/socialmedia/256/Dribbble-icon.png">
-    </a>
-    <a href="https://twitter.com/NikolayTalanov" target="_blank" class="icon-link icon-link--twitter">
-        <img src="https://cdn1.iconfinder.com/data/icons/logotypes/32/twitter-128.png">
-    </a>
-
-</body>
-
+  </body>
 </html>
